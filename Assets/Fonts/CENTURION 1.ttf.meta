@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 3ce6775e44fd247d2a2431d71bd1e839
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - CENTURION
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: fd3e621b1aacb4c88b88b77ec4dd92d3, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
