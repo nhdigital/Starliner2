@@ -12,9 +12,6 @@ public class ColourController : MonoBehaviour
 
     public string chosenColour;
 
-
-
-
     public void RedSelected()
     {
         playerMesh.mesh = red;

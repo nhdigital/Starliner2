@@ -11,6 +11,7 @@ using UnityEditor.PackageManager.UI;
 using NHDigital.Scripts;
 
 
+
 public class PlayfabManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI messageText;
@@ -22,13 +23,15 @@ public class PlayfabManager : MonoBehaviour
     [SerializeField] GameObject top10Button;
     [SerializeField] GameObject getPosButton;
     [SerializeField] GameObject motd;
+    [SerializeField] GameObject logOnPanel;
+    [SerializeField] NavigationController navigationController;
     public GameObject rowPrefab;
     public Transform rowsParent;
     public string XboxGamerTag = "";
     public bool isXboxMode = false;
 
-    NHDUSerLogin userlogin;
-    NHDLogger log;
+    static NHDUSerLogin userlogin;
+    static NHDLogger log;
     public TextMeshProUGUI usernameText;
     public Button cloudloginbutton;
     public Button justplaybutton;
@@ -44,7 +47,7 @@ public class PlayfabManager : MonoBehaviour
     public void ButtonCloudLogin()
     {
         usernameText.text = "Signing In...";
-        motd.SetActive(true);   
+        motd.SetActive(true);
 
         // DeactivateButtons();
 
@@ -55,10 +58,10 @@ public class PlayfabManager : MonoBehaviour
 
     public void ButtonJustPlay()
     {
-       
+
         usernameText.text = "Playing offline";
-     
-       // DeactivateButtons();
+
+        // DeactivateButtons();
 
         return;
     }
@@ -71,7 +74,7 @@ public class PlayfabManager : MonoBehaviour
         log.Write(strId);
 
 
-        usernameText.text = "Welcome " + (userlogin.strXboxGamertag != "" ? userlogin.strXboxGamertag : userlogin.strPFUserId) ;
+        usernameText.text = "Welcome " + (userlogin.strXboxGamertag != "" ? userlogin.strXboxGamertag : userlogin.strPFUserId);
 
 
         GetTitleData();
@@ -133,45 +136,52 @@ public class PlayfabManager : MonoBehaviour
 
     }
 
+    void PlayOnlineAgain()
+    {
+        UpdateStatus();
+        navigationController.Reset();
+        logOnPanel.SetActive(false);
+
+    }
+
+    void PlayOfflineAgain()
+    {
+        usernameText.text = "Playing offline";
+        navigationController.Reset();
+        logOnPanel.SetActive(false);
+
+    }
+
+
     void Start()
     {
-        log = new NHDLogger();
+        if (userlogin != null)
+        {
+            PlayOnlineAgain();
+        }
+        else
+        {
+            if (log != null)
+            {
+                PlayOfflineAgain();
+            }
+            else
+            {
+                //FIRST TIME
+                log = new NHDLogger();
+                usernameText.text = "Welcome";
+            }
+        }
 
-       usernameText.text = "Welcome";
     }
-  
-    
- 
-
-
-    
-    //void LoginPlayFabDefault()
-    //{
-    //    var request = new LoginWithCustomIDRequest
-    //    {
-    //        CustomId = SystemInfo.deviceUniqueIdentifier,
-    //        CreateAccount = true,
-    //    };
-    //    PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnError);
-    //}
-
-
-    //void OnLoginSuccess(LoginResult result)
-    //{
-    //    loggedInPlayfabID = result.PlayFabId;
-    //    Debug.Log("Successful login/ account create!");
-    //    GetMesh();
-    //    GetTitleData();
-    //}
-
-
-
 
     public void SendLeaderboard(int finalScore)
     {
-        var request = new UpdatePlayerStatisticsRequest
+        if (userlogin != null)
         {
-            Statistics = new List<StatisticUpdate>
+            var request = new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate>
             {
                 new StatisticUpdate
                 {
@@ -179,9 +189,9 @@ public class PlayfabManager : MonoBehaviour
                     Value = finalScore
                 }
             }
-        };
-        PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboardUpdate, OnError);
-
+            };
+            PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboardUpdate, OnError);
+        }
     }
 
     void OnLeaderboardUpdate(UpdatePlayerStatisticsResult result)
@@ -285,16 +295,16 @@ public class PlayfabManager : MonoBehaviour
     {
         Debug.Log("Recieved user data.");
         if (result.Data != null && result.Data.ContainsKey("Mesh"))
-        { 
-           if (result.Data["Mesh"].Value == "Red")
-           {
+        {
+            if (result.Data["Mesh"].Value == "Red")
+            {
                 colourController.RedSelected();
-           }
-           else if (result.Data["Mesh"].Value == "Blue")
-           {
+            }
+            else if (result.Data["Mesh"].Value == "Blue")
+            {
                 colourController.BlueSelected();
-           }
-           else if (result.Data["Mesh"].Value == "Yellow")
+            }
+            else if (result.Data["Mesh"].Value == "Yellow")
             {
                 colourController.YellowSelected();
             }
