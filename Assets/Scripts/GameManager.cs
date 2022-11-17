@@ -42,15 +42,12 @@ public class GameManager : MonoBehaviour
     public bool gameOverCalled;
 
 
-
     public void StartGame()
     {
-        
-
         isGameActive = true;
         fire.enabled = true;
         score = 0;
-        motdAnim.SetTrigger("StartGame");
+ ////       motdAnim.SetTrigger("StartGame");
         spawnManager.StartSpawning();
         StartCountdown();
         Buttons.SetActive(false);
@@ -73,7 +70,6 @@ public class GameManager : MonoBehaviour
         labels.SetActive(false);
         playfabManager.SendLeaderboard(score);
         StartCoroutine(buttonWorking());
-        //int finalScore = score-1;
         finalScoreText.text = "Final Score: " + score.ToString();
         
         gameOverCalled = true;
@@ -94,12 +90,11 @@ public class GameManager : MonoBehaviour
         sfxManager.PlayExplosionSFX();
     }
 
-
    public void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1f;
-     
+    
     }
 
 
