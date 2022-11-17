@@ -5,12 +5,20 @@ using UnityEngine;
 public class ColourController : MonoBehaviour
 {
     [SerializeField] PlayfabManager playfabManager;
-    [SerializeField] MeshFilter playerMesh;
+    static MeshFilter playerMesh;
     [SerializeField] Mesh red;
     [SerializeField] Mesh blue;
     [SerializeField] Mesh yellow;
 
     public string chosenColour;
+
+
+
+    private void Start()
+    {
+        playerMesh = GetComponent<MeshFilter>();    
+    }
+
 
     public void RedSelected()
     {
