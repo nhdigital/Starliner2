@@ -9,6 +9,8 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
+/[Uu]ser[Ss]ettings/
+/[Rr]ecordings/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -59,6 +61,9 @@ sysinfo.txt
 crashlytics-build.properties
 
 //NHD
+/[Aa]ssets/WSATestCertificate.*
 /[Aa]ssets/[Ss]tore/
+/[Aa]ssets/[Ss]cripts/PlayFabSDK/[Ss]hared/[Ee]ditor/
+/[Aa]ssets/[Ss]cripts/PlayFabSDK/[Ss]hared/[Pp]ublic/[Rr]esources/PlayFabSharedSettings.asset.*
 .vsconfig
 .build/
